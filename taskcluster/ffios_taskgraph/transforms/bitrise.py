@@ -21,6 +21,12 @@ bitrise_schema = Schema({
 
 transforms.add_validate(bitrise_schema)
 
+@transforms.add
+def set_bitrise_worker_type(config, tasks):
+    for task in tasks:
+        if task.get("worker-type") == "bitrise" and config.get("level") != "3":
+            task["worker-type"] = "bitrise-dev"
+        yield task
 
 @transforms.add
 def set_bitrise_app(config, tasks):

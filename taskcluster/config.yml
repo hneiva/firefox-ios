@@ -22,6 +22,11 @@ workers:
             implementation: scriptworker-bitrise
             os: scriptworker
             worker-type: mobile-{level}-bitrise
+        bitrise-dev:
+            provisioner: scriptworker-k8s
+            implementation: scriptworker-bitrise
+            os: scriptworker
+            worker-type: mobile-{level}-bitrise-dev
         images:
             provisioner: 'mobile-{level}'
             implementation: docker-worker
