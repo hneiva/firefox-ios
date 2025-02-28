@@ -8,6 +8,7 @@ tasks:
         # Project-specific trustDomain
         trustDomain: mobile
         canonicalRepo: https://github.com/mozilla-mobile/firefox-ios
+        stagingRepo: https://github.com/mozilla-mobile/staging-firefox-ios
 
         # Github events have this stuff in different places...
         ownerEmail:
@@ -111,7 +112,7 @@ tasks:
               || (tasks_for == "github-push" && short_head_branch == "main")
               || (tasks_for == "github-release" && releaseAction == "published")
             then:
-                taskId: 
+                taskId:
                     $if: 'tasks_for != "action"'
                     then: '${ownTaskId}'
                 taskGroupId:
@@ -155,7 +156,7 @@ tasks:
                 routes:
                     $flattenDeep:
                         - checks
-                        - $if: 'level == "3"'
+                        - $if: '!isPullRequest && baseRepoUrl in [canonicalRepo, stagingRepo]'
                           then:
                             - tc-treeherder.v2.${project}.${head_sha}
                             - $if: 'tasks_for == "github-push"'
